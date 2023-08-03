@@ -13,8 +13,21 @@ class PaginaInicial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Home(),
+      routes: {
+        '/':(context) => Home (),
+        '/contador':(context) => Contador(),
+        '/curtir':(context) => Curtir(),
+      },
     );
+  }
+}
+
+class Curtir extends StatelessWidget {
+  const Curtir({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
 
@@ -23,31 +36,75 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String x = "100";
+    return Scaffold(
+     appBar: AppBar(
+      title: Text("Home"),
 
+     ),
+     body: ListView(
+      children: [
+        ListTile(
+          leading: Icon(Icons.calculate, size:36),
+          title: Text("Contador"),
+          subtitle: Text("Exemplo de incremento e decremento"),
+          trailing: Icon(Icons.chevron_right),
+          onTap: (){
+            Navigator.pushNamed(context,'/contador');
+          }
+        ),
+        ListTile(
+          leading: Icon(Icons.favorite, size:36),
+          title: Text("Curtir"),
+          subtitle: Text("Exemplo de curtir e descutir"),
+          trailing: Icon(Icons.chevron_right),
+          onTap:() {
+            Navigator.pushNamed(context, '/curtir');
+            
+          }
+        ), 
+      ],
+     )
+
+    );
+  }
+}
+
+class Contador extends StatefulWidget {
+  const Contador({super.key});
+
+  @override
+  State<Contador> createState() => _ContadorState();
+}
+
+class _ContadorState extends State<Contador> {
+    int x = 100;
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
       title: Text("Meu Aplicativo"),
     ),
-    body:Center (
+    body:
+    Center (
       child:Column (
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text (x),
+        Text (x.toString()),
         ElevatedButton ( 
           onPressed: () {
-        //AO PRESSIONAR O BOTÃO
-        // ignore: avoid_print
-        print ("Antes de zerar");
-        // ignore: avoid_print
-        print (x);
-          x ="0";
-          print("Depois de zerar");
-          // ignore: avoid_print
-          print(x);
-          },
-          child: Text("Zerar"),
+            setState(() {
+              x = 0;
+            });
+          }, child: null,
         ),
+
+        ElevatedButton (
+          onPressed: () {
+            setState(() {
+              x = 0;
+            });
+          }, child: null,
+          ),
       ],
     ),
     ),
